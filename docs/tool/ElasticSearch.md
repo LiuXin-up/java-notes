@@ -1,4 +1,4 @@
-# 注意事项
+## 注意事项
 
 1.  ***kibana***\*\* 的版本需要与 es 的版本对应，否则不能使用\*\*
 2.  **es 的版本与 spring boot 版本有对应关系，如果不对应，会出现一些问题。**
@@ -9,7 +9,7 @@
 
 # 安装服务（Windows环境）
 
-## 安装与启动
+### 安装与启动
 
 1.  下载网址：[Download Elasticsearch | Elastic](https://www.elastic.co/cn/downloads/elasticsearch)
 2.  下载后为一个zip文件，解压缩到目录中
@@ -45,7 +45,7 @@
     }
     ```
 
-## 账号密码
+### 账号密码
 
 1.  默认的账号密码
 
@@ -65,7 +65,7 @@
     curl -XPUT -u elastic（用户）:"otpKRXJZqe9Dzs5iXTjO"（密码） 'http://localhost:9200/_security/user/elastic（对应用户）/_password' -H "Content-Type: application/json" -d '{  "password": "1234qwer."（需要修改的密码）}'
     ```
 
-## 可视化工具--head插件安装
+### 可视化工具--head插件安装
 
 1.  安装node,安装后，使用 node -v 查看node版本
 2.  安装grunt
@@ -81,7 +81,7 @@
     4.  使用命令npm start启用服务
     5.  浏览器中访问，使用地址：localhost:9100访问.默认端口9100
 
-## 使用kibana查看es（推荐）
+### 使用kibana查看es（推荐）
 
 1.  从官网下载kibana
 2.  解压缩
@@ -98,13 +98,13 @@
 
 # ES分词器&#x20;
 
-## 常见分词器
+### 常见分词器
 
 standard：ES默认的分词器，会将词汇单元进行小写形式，并且去除一些停用词和标点符号等等。支持中文，采用的方法为单字切分。
 
 IK分词器：目前ES开源社区对于中文分词支持最好的第三方的插件。
 
-## 使用IK进行分词
+### 使用IK进行分词
 
 1.  下载ik。GitHub地址：
 

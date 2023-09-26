@@ -1,4 +1,5 @@
-# 查看版本对应：[RabbitMQ Erlang 版本要求](https://www.rabbitmq.com/which-erlang.html)
+## 版本对应
+[RabbitMQ与Erlang 版本对应要求](https://www.rabbitmq.com/which-erlang.html)
 
 # Erlang
 
@@ -14,10 +15,10 @@
 2.  配置环境变量
     1.  创建 ERLANG\_HOME
 
-        ![在这里插入图片描述](https://img-blog.csdnimg.cn/4968adb143424091ab555e90f1ed0542.png "在这里插入图片描述")
+        ![erlang环境变量](tool_img/erlang环境变量.png)
     2.  添加环境变量到path
 
-        ![在这里插入图片描述](https://img-blog.csdnimg.cn/6537a1b0ff7b4f0aaa0c601fc0c92cd2.png "在这里插入图片描述")
+        ![erlang_path](tool_img/erlang_path.png)
     3.  查看是否安装成功
 
         在cmd中，执行命令 **erl**。显示如下，则安装成功
