@@ -99,33 +99,33 @@ SELECT 语法：
 > 	c.crm_name = '周扒皮'
 > ```
 
-# 索引
+## 索引
 
-## 什么是索引？
+### 什么是索引？
 
 MySQL中的索引是一种数据结构，用于提高数据库查询的速度。
 
-## 索引应该加在哪些字段？
+### 索引应该加在哪些字段？
 
 在MySQL中，可以加索引的字段通常是那些经常出现在WHERE子句中的字段，特别是大表的字段。此外，索引应该建在选择性高的字段上，而不是小字段上。
 
 例如订单表，索引应该加在订单号、订单状态字段，而不是加载订单备注、详细地址字段
 
-## 查询：
+### 查询：
 
 查询时，查询字段与查询条件都为索引字段，查询速度会快很多
 
 如果使用的字段没有索引，对执行时间较长的部分字段建立索引
 
-## 正面案例：
+### 正面案例：
 
 ![5000条索引数据](img_sql/5000条索引数据.png)
 
-## 反面案例：
+### 反面案例：
 
 ![5000条全字段数据](img_sql/5000条全字段数据.png)
 
-## 索引不生效的情况
+### 索引不生效的情况
 
 > 对列进行**计算**或使用**函数**；
 >
@@ -176,17 +176,17 @@ MySQL中的索引是一种数据结构，用于提高数据库查询的速度。
 > select id, tag from user_tag;
 > ```
 
-# 表关联
+## 表关联
 
 代码规范中，建议表关联不超过三个。
 
 连接表时可以将大表变为小表，先筛选一部分数据再连接其他的表，以减少数据查询量
 
-## 正面案例：
+### 正面案例：
 
 ![三表关联](img_sql/三表关联.png)
 
-## 反面案例：
+### 反面案例：
 
 ![长SQL示例](img_sql/长SQL示例.png)
 
@@ -526,7 +526,7 @@ FROM
 -- 918 end
 ```
 
-# explain进行调优
+## explain进行调优
 
 explain：性能分析函数
 
@@ -559,7 +559,7 @@ explain：性能分析函数
 > index：全索引扫描\
 > all：全表扫描
 
-## 性能从强到差：
+### 性能从强到差：
 
 <span   style="background:linear-gradient( to right,   #4EAE04, #36BE52, #93E312, #B0D08D, #e6c07b, #FF8810, #F37A29); font-size: x-large; font-family: 黑体; "> system > const > eq\_ref > ref > ref\_or\_null > index\_merge > unique\_subquery > index\_subquery > range > index > all
 
@@ -567,32 +567,32 @@ explain：性能分析函数
 
 一般要求至少是**range**级别，最好能达到**ref**级别。
 
-## 特殊情况：
+### 特殊情况：
 
 ![特殊情况](img_sql/特殊情况.png)
 
 \<auto\_key0>：优化器为派生表生成的索引。中间索引。
 
-# distinct 和 group by
+## distinct 和 group by
 
-## 去重对比
+### 去重对比
 
 > distinct对所有字段进行去重\
 > group by 对指定字段进行去重
 
-## 效率对比
+### 效率对比
 
 > 在语义相同，有索引的情况下：`group by`和distinct都能使用索引，效率相同。\
 > 在语义相同，无索引的情况下：distinct效率高于`group by`。原因是distinct 和 `group by`都会进行分组操作，但`group by`可能会进行排序，触发filesort，导致sql执行效率低下。
 
-## 推荐group by的原因
+### 推荐group by的原因
 
 > group by语义更为清晰\
 > group by可对数据进行更为复杂的一些处理
 
-# count()统计行数
+## count()统计行数
 
-## count(\*)
+### count(\*)
 
 在Mysql中，`count(*)`的作用是统计表中记录的总行数。
 
@@ -604,7 +604,7 @@ explain：性能分析函数
 
 在**innodb**使用count(\*)时，需要从存储引擎中一行行的读出数据，然后累加起来，所以执行效率很低。
 
-## count的各种用法性能对比
+### count的各种用法性能对比
 
 > count(\*) ：它会获取所有行的数据，不做任何处理，行数加1
 >
@@ -616,7 +616,7 @@ explain：性能分析函数
 >
 > count(未加索引列)：它会全表扫描获取所有数据，解析中未加索引列，然后判断是否为NULL，如果不是NULL，则行数+1。
 
-## count的性能从高到低
+### count的性能从高到低
 
  <span style="background:linear-gradient( to right,   #0FB746, #17C913, #4DD60C, #93E312, #C4E759); font-size: x-large; font-family: 黑体,serif; "> count(\*) ≈ count(1) > count(id) > count(普通索引列) > count(未加索引列)
 
