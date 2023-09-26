@@ -2,13 +2,11 @@
 
 ![logo](_img/logo.png)
 
-# docsify <small>3.5</small>
+# Java-notes <small>2023</small>
 
-> 一个神奇的文档网站生成器。
+> Java学习笔记
 
-- 简单、轻便 (压缩后 ~21kB)
-- 无需生成 html 文件
-- 众多主题
+### 数据结构、中间件、工具类、数据处理等
 
 [仓库地址](https://gitee.com/cn_up/java-notes)
-[开始学习](#docsify)
+[开始学习](#java笔记)
