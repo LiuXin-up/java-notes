@@ -1,31 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Java Notes</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+    <meta charset="UTF-8">
+    <title>Java Notes</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="description" content="Description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
     <!--  title旁边的icon  -->
-  <link rel="icon" type="image/x-icon" href="_img/logo.png" >
+    <link rel="icon" type="image/x-icon" href="_img/logo.png">
+    <!-- 引入mermaid 支持流程图等 -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css">
+
 </head>
 <body>
-    <!--  加载文字  -->
-  <div id="app">加载中</div>
-  <script>
-    window.$docsify = {
-      name: '',
-      repo: '',
-      // 开启封面
-      coverpage: true,
-      // 开启目录
-      loadSidebar: true,
-      subMaxLevel: 2
-    }
-  </script>
+<!--  加载文字  -->
+<div id="app">加载中</div>
 
-  <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+
+<script>
+    // var num = 0;
+    // mermaid.initialize({ startOnLoad: false });
+
+    window.$docsify = {
+        name: '',
+        repo: '',
+        // 开启封面
+        coverpage: true,
+        // 开启目录
+        loadSidebar: true,
+        subMaxLevel: 2,
+        // 引入mermaid 支持流程图等
+        plugins: [
+            function (hook, vm) {
+                hook.ready(function () {
+                    // 类似 jQuery.ready 初始化 mermaid, 禁用自动渲染
+                    mermaid.initialize({ startOnLoad: false });
+                });
+                hook.doneEach(function () {
+                    // 每个页面渲染完成后手动渲染 mermaid 图表
+                    mermaid.init(undefined, '.mermaid');
+                });
+            }
+        ],
+        markdown: {
+            renderer: {
+                code: function(code, lang) {
+                    var html = '';
+                    // 搜索 mermaid 代码
+                    if(code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)){
+                        // 生成一个 mermaid 图表的容器
+                        html = '<div class="mermaid">' + code + '</div>';
+                    }
+                    // 源码自带的 Prism 高亮插件
+                    var hl = Prism.highlight(code, Prism.languages[lang] || Prism.languages.markup)
+                    // 将图表的容器添加到代码之前
+                    return html + '<pre v-pre data-lang="' + lang + '"><code class="lang-' + lang + '">' + hl + '</code></pre>'
+                }
+            }
+        }
+    }
+</script>
+
+<!-- Docsify v4 -->
+<script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+<!-- 引入mermaid 支持流程图等 -->
+<script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 </body>
 </html>
