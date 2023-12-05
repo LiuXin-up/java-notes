@@ -19,3 +19,5 @@
 
 * [<span style="font-size: 15px; font-weight: bolder;">服务器</span>](server/)
 * * [Linux](server/Linux.md)
+
+[//]: # (* * [WeChat]&#40;server/web/WeChat.html&#41;)
