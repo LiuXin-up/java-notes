@@ -35,3 +35,9 @@ Docsify 官网：https://docsify.js.org/
    ```
 
 2. 默认访问地址 http://localhost:3000 
+
+3. 在线地址
+
+   `github` [Java Notes (liuxin-up.github.io)](https://liuxin-up.github.io/java-notes/#/)
+
+   `gitee`&ensp;  [Java Notes (gitee.io)](https://cn_up.gitee.io/java-notes/#/)
