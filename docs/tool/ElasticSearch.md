@@ -1,13 +1,55 @@
-## 注意事项
+## 基础概念
 
-1.  ***kibana***\*\* 的版本需要与 es 的版本对应，否则不能使用\*\*
-2.  **es 的版本与 spring boot 版本有对应关系，如果不对应，会出现一些问题。**
+### 文档和字段
 
-    \*\*查看版本对应： \*\*[Spring Data Elasticsearch - Reference Documentation](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#preface.versions)
-3.  **修改了实体类的名称、包所在位置等信息，会导致es增删查改报错，需要清除之前的所有数据及缓存。**
-4.  以下内容基于 ==spring boot 2.3.7.RELEASE ==版本
+> 一个文档就像是数据库的一条数据，字段（Field）就相当于数据库的列。
+
+es中的数据是面向**文档（Document）**存储的。文档被序列化为json数据存储在es中。
+
+示例：
+
+```json
+{
+    "id":1,
+    "title":"标题1",
+    "name":"这是文章1"
+}
+{
+    "id":2,
+    "title":"标题2",
+    "name":"这是文章2"
+}
+{
+    "id":3,
+    "title":"标题3",
+    "name":"这是文章3"
+}
+```
+
+### 索引和映射
+
+> 索引就像数据库里的表，映射就像数据库中定义的表结构
+
+**索引（Index）**是相同类型文档的集合，类似与MySQL中的表。
+
+**映射（mapping）**相当于数据库的约束信息，类似于表的结构约束。
+
+
+<br>
 
 # 安装服务（Windows环境）
+
+### 注意事项
+
+1. ***kibana***\*\* 的版本需要与 es 的版本对应，否则不能使用\*\*
+
+2. **es 的版本与 spring boot 版本有对应关系，如果不对应，会出现一些问题。**
+
+   \*\*查看版本对应： \*\*[Spring Data Elasticsearch - Reference Documentation](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#preface.versions)
+
+3. **修改了实体类的名称、包所在位置等信息，会导致es增删查改报错，需要清除之前的所有数据及缓存。**
+
+4. 以下内容基于 ==spring boot 2.3.7.RELEASE ==版本
 
 ### 安装与启动
 
