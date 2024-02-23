@@ -1,7 +1,12 @@
 <!-- docs/_sidebar.md -->
 
 * [<span style="font-size: 15px; font-weight: bolder;">首页</span>](?id=java笔记)
-* 
+
+
+* [<span style="font-size: 15px; font-weight: bolder;">框架</span>](framework/)
+* * [Spring常用注解](framework/Spring常用注解.md)
+
+
 * [<span style="font-size: 15px; font-weight: bolder;">中间件</span>](tool/)
 * * [RabbitMQ](tool/RabbitMQ.md)
 * * [ElasticSearch](tool/ElasticSearch.md)
