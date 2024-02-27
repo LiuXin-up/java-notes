@@ -55,16 +55,20 @@ es中的数据是面向**文档（Document）**存储的。文档被序列化为
 
 1.  下载网址：[Download Elasticsearch | Elastic](https://www.elastic.co/cn/downloads/elasticsearch)
 2.  下载后为一个zip文件，解压缩到目录中
-3.  解压后为 elasticsearch-X.X.X  目录，进入/bin目录下，点击 ***elasticsearch.bat*** 启动服务
+3.  解压后为 elasticsearch-X.X.X  目录，进入/bin目录下，点击 `elasticsearch.bat` 启动服务
 4.  如果启动出现以下报错，则原因为：在GeoIpDownloader下载更新的环节存在bug，可能导致索引分片状态判断不准确，从而抛出错误
 
-        exception during geoip databases updateorg.elasticsearch.ElasticsearchException: not all primary shards of [.geoip_databases] index are active at org.elasticsearch.ingest.geoip@8.4.3/org.elasticsearch.ingest.geoip.GeoIpDownloader.updateDatabases(GeoIpDownloader.java:134)
-        ...
-        could not delete old chunks for geoip database [GeoLite2-ASN.mmdb]org.elasticsearch.action.search.SearchPhaseExecutionException: all shards failed at org.elasticsearch.server@8.4.3/org.elasticsearch.action.search.AbstractSearchAsyncAction.onPhaseFailure(AbstractSearchAsyncAction.java:728)
-        GeoIpDo
+    ```bash
+    exception during geoip databases updateorg.elasticsearch.ElasticsearchException: not all primary shards of [.geoip_databases] index are active at org.elasticsearch.ingest.geoip@8.4.3/org.elasticsearch.ingest.geoip.GeoIpDownloader.updateDatabases(GeoIpDownloader.java:134)
+    ...
+    could not delete old chunks for geoip database [GeoLite2-ASN.mmdb]org.elasticsearch.action.search.SearchPhaseExecutionException: all shards failed at org.elasticsearch.server@8.4.3/org.elasticsearch.action.search.AbstractSearchAsyncAction.onPhaseFailure(AbstractSearchAsyncAction.java:728)
+    GeoIpDo
+    ```
 5.  解决办法：修改/config/elasticsearch.yml 中的配置信息，在尾部添加以下代码，作用为：关闭geoip库的更新
 
-        ingest.geoip.downloader.enabled: false
+    ```bash
+    ingest.geoip.downloader.enabled: false
+    ```
 6.  启动后，输入 [localhost:9200](http://localhost:9200/) 进入es。启动成功后，出现以下内容
 
     ```json
@@ -112,31 +116,45 @@ es中的数据是面向**文档（Document）**存储的。文档被序列化为
 1.  安装node,安装后，使用 node -v 查看node版本
 2.  安装grunt
 
-    使用命令安装：npm install -g grunt-cli 安装grunt
+    使用命令安装：`npm install -g grunt-cli` 安装grunt
 
-    安装结束后，使用命令grunt -version查看是否安装成功
+    安装结束后，使用命令`grunt -version`查看是否安装成功
 3.  安装head插件
 
     1.  \*\*下载head插件 \*\*下载地址：<https://github.com/mobz/elasticsearch-head>
     2.  **解压zip包**
-    3.  在dos窗口进入到head路径下，使用命令npm install安装pathomjs
-    4.  使用命令npm start启用服务
+    3.  在dos窗口进入到head路径下，使用命令`npm install`安装`pathomjs`
+    4.  使用命令`npm start`启用服务
     5.  浏览器中访问，使用地址：localhost:9100访问.默认端口9100
 
 ### 使用kibana查看es（推荐）
 
-1.  从官网下载kibana
-2.  解压缩
-3.  修改kibana的yml配置，在尾部添加相关设置项代码
+1. 从官网下载kibana
 
-    ```bash
-    修改为中文
-    i18n.locale: "zh-CN"
-    设置连接的es的用户名密码
+2. 解压缩
 
-    ```
+3. 修改配置文件
 
-&#x9;&#x9;
+   1. 配置文件在`config/kibana.yml`中
+
+   2. 修改kibana的yml配置，在尾部添加相关设置项代码
+
+      ```bash
+      # =================== 其他配置项 ===================
+      # 此处省略其他默认配置项
+      # =================== 其他配置项 ===================
+      
+      # =================== 修改为中文 ===================
+      i18n.locale: "zh-CN"
+      # =================== 设置连接es的用户名密码 ===================
+      elasticsearch.username: "kibana_system"
+      elasticsearch.password: "123456"
+      
+      ```
+
+4. 使用`bin/kibana.bat`启动kibana，默认端口为5601
+
+   
 
 # ES分词器&#x20;
 
