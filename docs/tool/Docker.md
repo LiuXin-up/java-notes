@@ -49,7 +49,7 @@ docker logs <容器的id或name> > /home/project/projectOne/logs.txt
 
    1.  **DockerFile** 文件示例
 
-      ```
+      ```bash
       # 指定基础镜像为包含Java运行环境的镜像
       FROM openjdk:8-jdk
       # 将jar包添加到容器中
@@ -63,30 +63,30 @@ docker logs <容器的id或name> > /home/project/projectOne/logs.txt
    2.  **DockerFile** 写法说明。一般情况下，只使用部分命令
 
       ```bash
+      # 基础镜镜像,—切从这里开始构建
       FROM
-      #基础镜镜像,—切从这里开始构建
+      # 镜像是谁写的，姓名+邮箱
       MAINTAINER
-      #镜像是谁写的，姓名+邮箱
+      # 镜像构建的时候需要运行的命令
       RUN
-      #镜像构建的时候需要运行的命令
+      # 将jar包添加到容器中
       ADD
-      #步骤:tomcat镜像,这个tomcat压缩包!添加内容
+      # 镜像的工作目录
       WORKDIR
-      #镜像的工作目录
+      # 挂载的目录
       VOLUME
-      #挂载的目录
+      # 暴露应用程序运行的端口
       EXPOSE
-      #保留端口配置
+      # 设置容器启动时执行的命令,只有最后一个会生效，可被替代
       CMD
-      #指定这个容器启动的时候要运行的命令,只有最后一个会生效，可被替代
+      # 设置容器启动时执行的命令,可以追加命令
       ENTRYPOINT
-      #指定这个容器启动的时候要运行的命令,可以追加命令
+      # 当构建一个被继承DockerFile这个时候就会运行ONBUILD的指令。触发指令。
       ONBUILD
-      #当构建一个被继承DockerFile这个时候就会运行ONBUILD的指令。触发指令。
+      # 类似ADD，将我们文件拷贝到镜像中
       COPY
-      #类似ADD，将我们文件拷贝到镜像中
+      # 构建的时候设置的环境变量
       ENV
-      #构建的时候设置的环境变量
       ```
 
    
