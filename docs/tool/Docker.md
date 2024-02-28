@@ -101,9 +101,9 @@ docker logs <容器的id或name> > /home/project/projectOne/logs.txt
 
    2. 在其他目录中，或者直接运行报错时，使用指定 **dockerfile目录** 的方式构建镜像
 
-   ```bash
-   docker build -f /home/project/DockerFile -t <自定义的镜像名称> .
-   ```
+      ```bash
+      docker build -f /home/project/DockerFile -t <自定义的镜像名称> .
+      ```
 
 4. 启动镜像
 
