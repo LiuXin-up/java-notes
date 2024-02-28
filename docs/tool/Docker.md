@@ -17,6 +17,12 @@ docker ps
 # 查看所有镜像
 docker images
 
+# 停止容器运行
+docker stop <容器id>
+
+# 重启容器
+docker restart <容器id>
+
 # 查看docker版本
 docker version
 
