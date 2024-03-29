@@ -60,6 +60,14 @@
             }
         }
     }
+
+</script>
+
+<script>
+    <!--  开启离线模式  -->
+    if (typeof navigator.serviceWorker !== 'undefined') {
+        navigator.serviceWorker.register('sw.js')
+    }
 </script>
 
 <!-- Docsify v4 -->
