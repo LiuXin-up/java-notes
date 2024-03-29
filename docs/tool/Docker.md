@@ -2,9 +2,79 @@
 
 ## 安装
 
+1. 卸载旧版本
 
+   ```bash
+   yum remove docker \
+                     docker-client \
+                     docker-client-latest \
+                     docker-common \
+                     docker-latest \
+                     docker-latest-logrotate \
+                     docker-logrotate \
+                     docker-engine
+   ```
+
+2. 下载utils安装包
+
+   ```bash
+    yum install -y yum-utils
+   ```
+
+3. 设置镜像仓库地址
+
+   ```bash
+      yum-config-manager \
+       --add-repo \
+       http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+   ```
+
+4. 更新软件包索引
+
+   ```bash
+   yum makecache fast
+   ```
+
+5. 安装docker相关的引擎
+
+   注：docker-ce 社区版 ee企业版
+
+   ```bash
+   yum install docker-ce docker-ce-cli containerd.io
+   ```
 
 ## 启动测试
+
+1. 启动docker
+
+   ```bash
+   systemctl start docker
+   ```
+
+2. 查看docker的版本
+
+   ```bash
+   docker version
+   ```
+
+3. hello world测试
+
+   ```bash
+   docker run hello-world
+   ```
+
+4. 设置开机启动
+
+   ```bash
+   systemctl enable docker
+   ```
+
+   
+
+## docker内服务安装实例
+<a href="#tool/docker_service/elasticsearch.md" style="font-size: 20px; color: #4682B4; text-decoration: none">ElasticSearch</a>
+
+
 
 
 
