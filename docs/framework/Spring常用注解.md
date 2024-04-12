@@ -184,3 +184,144 @@ public interface RemoteService {
     }
 ```
 
+
+
+## 全局处理
+
+### @ControllerAdvice
+
+`@ControllerAdvice：`的增强版@Controller；用于全局处理、声明全局性（例如：声明全局异常、全局数据处理、请求参数预处理）。
+
+### @ExceptionHandler（全局处理使用异常）
+
+`@ExceptionHandler`注解标注的方法：用于捕获Controller中抛出的不同类型的异常，进行异常全局处理。
+
+示例：
+
+```Java
+@ControllerAdvice
+@ResponseBody
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class ExceptionControllerAdvice {
+ 
+    @ExceptionHandler(BaseException.class)
+    public ResultVO<Object> baseException(BaseException ex) {
+        return new ResultVO<>(ex.getCode(), ex.getMsg());
+    }
+ 
+    @ExceptionHandler({Exception.class})
+    public ResultVO<Object> exception(Exception ex, HttpServletRequest request) {
+        this.log.error("未处理到异常", ex);
+        return getErrorResult(EnumResultMsg.SYSTEM_ERROR, (String)null);
+    }
+}
+```
+
+```java
+@RestController
+@RequestMapping("/test")
+public class TestController {
+ 
+    @GetMapping("/exception")
+    public void testException() {
+        throw new BusinessException("异常测试");
+    }
+}
+```
+
+`BusinessException`继承自`BaseException`，业务逻辑中抛出异常，最终会走到`ExceptionControllerAdvice`中的`baseException`方法中，最终封装成`ResultVO`对象返回给前台
+
+### @ModelAttribute（可用于全局数据处理）
+
+`@ModelAttribute`注解的作用是将请求参数绑定到指定的模型对象上，此方法会在执行目标Controller方法之前执行
+
+示例：将参数绑定到model中，通过model的asMap方法获取到数据
+
+```java
+
+/**
+ * 全局数据处理类
+ *
+ * @Author 刘新
+ * @Date 2024/4/7 10:29
+ */
+@ControllerAdvice
+public class GlobalDataConfig {
+
+    /**
+     * 全局数据处理示例：增加一个userInfo数据
+     * ModelAttribute：使用注解
+     *
+     * @return
+     */
+    @ModelAttribute(value = "info")
+    public Map<String, String> userInfo() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("username", "张三");
+        map.put("gender", "男");
+        return map;
+    }
+}
+```
+
+```java
+    @GetMapping("/getInfo")
+    @ResponseBody
+    public void hello(Model model) {
+        Map<String, Object> map = model.asMap();
+        for (String s : map.keySet()) {
+            System.out.println("key:" + s + ",value:" + map.get(s));
+        }
+    }
+```
+
+输出结果：
+
+```bash
+key:info,value:{gender=男, username=张三}
+```
+
+
+
+## @InitBinder（请求参数预处理）
+
+`@InitBinder`作用于一个controller类，用于对请求参数进行预处理，如：参数类型转换、参数绑定等操作
+
+示例：
+
+```java
+/**
+ * 全局处理示例类
+ *
+ * @Author 刘新
+ * @Date 2024/4/7 10:31
+ */
+@RestController
+@RequestMapping("global")
+public class GlobalController {
+
+    /**
+     * 参数预处理（接口调用之前生效）
+     * @param binder
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        // 设置需要预处理的属性，这里以日期类型为例
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
+    }
+
+    /**
+     * 参数类型转换
+     * 当接口传参为string类型的"2024-01-01“时
+     * 如果不使用InitBinder进行参数预处理，会提示类型错误
+     *
+     * @param date
+     * @return
+     */
+    @RequestMapping("/test")
+    public String test(Date date) {
+        return "Received date: " + date;
+    }
+}
+```
+
