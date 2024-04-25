@@ -17,10 +17,19 @@ Docsify 官网：https://docsify.js.org/
     ```sh
     npm install -g cnpm --registry=https://registry.npm.taobao.org
     ```
+    如果切换为镜像后仍出现报错，可能是淘宝镜像证书问题，切换为以下淘宝新镜像可解决
+    ```sh
+    npm config set registry https://registry.npmmirror.com
+    ```
     
 3. 安装 docsify
 
    `docsify` 官方快速开始文档：https://docsify.js.org/#/quickstart
+   
+   安装命令
+   ```sh
+   npm i docsify-cli -g
+   ```
 
 4. 部署到服务器
 
