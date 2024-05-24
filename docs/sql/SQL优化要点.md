@@ -573,6 +573,133 @@ explain：性能分析函数
 
 \<auto\_key0>：优化器为派生表生成的索引。中间索引。
 
+## 在Oracle中使用WITH优化子查询
+
+### 使用with前后的sql对比
+
+**使用前：**
+
+> 一层套一层，逻辑复杂混乱，可读性差
+>
+> 子查询索引可能会失效，执行速度慢
+
+
+
+```sql
+select
+  su.id,
+  ta.orgName,
+  tb.taskName
+from
+  sys_user su
+  left join (
+    select
+      soa.id,
+      soa.user_id as userId,
+      so.name as orgName
+    from
+      sys_org_amount soa left sys_org so on soa.org_id = so.id
+    where
+      soa.amount_code in ('1001', '1002')
+      and soa.del_flag = 0
+      and soa.create_time >= '2024-05-24'
+      and soa.create_time <= '2024-06-24'
+  ) ta on su.user_id = ta.user_id
+  left join (
+    select
+      st.id,
+      st.name as taskName,
+      stu.user_id as userId
+    from
+      sys_task_user stu
+      left join sys_task st on stu.task_id = st.id
+    where
+      st.id in ('TK001', 'TK002')
+  ) tb on su.user_id = tb.userId
+```
+
+**使用后：**
+
+> 将子查询抽离出来，提高可读性
+>
+> 使用  `/*+ materialize */`  提高整体性能
+
+```sql
+-- 使用with将子查询抽离
+WITH
+  table_to_a as (
+    select
+      /*+ materialize */
+      soa.id,
+      soa.user_id as userId,
+      so.name as orgName
+    from
+      sys_org_amount soa left sys_org so on soa.org_id = so.id
+    where
+      soa.amount_code in ('1001', '1002')
+      and soa.del_flag = 0
+      and soa.create_time >= '2024-05-24'
+      and soa.create_time <= '2024-06-24'
+  ),
+  table_to_b as (
+    select
+      /*+ materialize */
+      st.id,
+      st.name as taskName,
+      stu.user_id as userId
+    from
+      sys_task_user stu
+      left join sys_task st on stu.task_id = st.id
+    where
+      st.id in ('TK001', 'TK002')
+  )
+  
+select
+  su.id,
+  ta.orgName,
+  tb.taskName
+from
+  sys_user su
+  left join table_to_a ta on su.user_id = ta.user_id
+  left join table_to_b tb on su.user_id = tb.userId
+```
+
+
+
+### with的用法
+
+```sql
+with as语法
+–针对一个别名
+with tmp as (select * from tb_name)
+ 
+–针对多个别名
+with
+   tmp as (select * from tb_name),
+   tmp2 as (select * from tb_name2),
+   tmp3 as (select * from tb_name3),
+   .....
+```
+
+### with中的关键字及应用场景
+
+| 关键字      | 描述                                          | 应用场景                                                     |
+| :---------- | :-------------------------------------------- | ------------------------------------------------------------ |
+| materialize | 强制将 with as 中的子查询结果集转换为临时表   | 如果在 with as 中的子查询返回结果集很大，且调用该子查询不走索引时，加 materialize 能极大提升整体性能 |
+| inline      | 强制不将 with as 中的子查询结果集转换为临时表 | 如果在 with as 中的子查询返回结果集很小，且调用该子查询能走索引时，加 materialize 反而会降低整体性能，这种情况下，为稳定性能，可使用 inline 抑制其转换为临时表。 |
+
+**格式**
+
+```sql
+with tmp as (select /*+ materialize */ * from tb_name)
+ 
+或者
+ 
+with tmp as (select /*+ inline*/ * from tb_name)
+```
+
+
+
 ## distinct 和 group by
 
 ### 去重对比
