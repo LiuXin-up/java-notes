@@ -15,6 +15,7 @@
 * * [Docker](tool/Docker.md)
 
 * [<span style="font-size: 15px; font-weight: bolder;">数据库</span>](sql/)
+* * [SQL基础](sql/SQL基础.md)
 * * [SQL优化](sql/SQL优化要点.md)
 
 
