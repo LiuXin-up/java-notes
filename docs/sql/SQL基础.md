@@ -21,7 +21,7 @@ SELECT 语法：
 > 	user_table
 > ```
 
-![查询](D:/proJect/java-notes/docs/sql/img_sql/查询.png)
+![查询](img_sql/查询.png)
 
 ## 常用语法
 
