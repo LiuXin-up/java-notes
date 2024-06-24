@@ -28,4 +28,7 @@
 * [<span style="font-size: 15px; font-weight: bolder;">服务器</span>](server/)
 * * [Linux](server/Linux.md)
 
+* [<span style="font-size: 15px; font-weight: bolder;">设计模式</span>](design_pattern/)
+* * [策略模式](design_pattern/策略模式.md)
+
 [//]: # (* * [WeChat]&#40;server/web/WeChat.html&#41;)
