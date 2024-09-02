@@ -13,6 +13,7 @@
 * * [ElasticSearch](tool/ElasticSearch.md)
 * * [Redis](tool/Redis.md)
 * * [Docker](tool/Docker.md)
+* * [Nginx](tool/Nginx.md)
 
 * [<span style="font-size: 15px; font-weight: bolder;">数据库</span>](sql/)
 * * [SQL基础](sql/SQL基础.md)
