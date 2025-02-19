@@ -43,6 +43,16 @@ Docsify 官网：https://docsify.js.org/
    docsify serve docs
    ```
 
+   或者使用`python`命令启动
+
+   ```bash
+   cd docs && python -m http.server 3000
+   **或者在docs目录下直接执行
+   python -m http.server 3000
+   ```
+
+   
+
 2. 默认访问地址 http://localhost:3000 
 
 3. 在线地址

@@ -6,6 +6,7 @@
 * [<span style="font-size: 15px; font-weight: bolder;">框架</span>](framework/)
 * * [Spring常用注解](framework/Spring常用注解.md)
 * * [过滤器与拦截器](framework/过滤器与拦截器)
+* * [报错及解决方案](framework/报错及解决方案)
 
 
 * [<span style="font-size: 15px; font-weight: bolder;">中间件</span>](tool/)
